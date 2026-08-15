@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sidebar or Quick Navigation -->
+        <div class="col-md-3">
+            <div class="list-group shadow-sm">
+                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    Dashboard Overview
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">Manage Teachers</a>
+                <a href="#" class="list-group-item list-group-item-action">Manage Students</a>
+                <a href="#" class="list-group-item list-group-item-action">Lectures Schedule</a>
+                <a href="#" class="list-group-item list-group-item-action">Lecture Reports</a>
+                <a href="#" class="list-group-item list-group-item-action">Student Feedback & Ratings</a>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-9">
+            <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Admin Dashboard</h1>
+                    <p class="col-md-8 fs-4">Welcome back, <strong>@User.Identity?.Name</strong>! Use this control panel to manage teachers, students, bookings, reports, and reviews.</p>
+                    <hr class="my-4">
+                    <p>Current role permissions: 
+                        <span class="badge bg-success">Authenticated</span>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <span class="badge bg-danger">SuperAdmin Access</span>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <span class="badge bg-warning text-dark">Admin Access</span>
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <!-- Management Stats Placeholders -->
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm bg-primary text-white">
+                        <div class="card-body py-4">
+                            <h5 class="card-title">Teachers</h5>
+                            <p class="card-text fs-2">--</p>
+                            <a href="#" class="btn btn-light btn-sm text-primary">Manage Teachers</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm bg-success text-white">
+                        <div class="card-body py-4">
+                            <h5 class="card-title">Students</h5>
+                            <p class="card-text fs-2">--</p>
+                            <a href="#" class="btn btn-light btn-sm text-success">Manage Students</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm bg-dark text-white">
+                        <div class="card-body py-4">
+                            <h5 class="card-title">Upcoming Lectures</h5>
+                            <p class="card-text fs-2">--</p>
+                            <a href="#" class="btn btn-light btn-sm text-dark">View Schedule</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

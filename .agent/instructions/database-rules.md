@@ -2,6 +2,7 @@
 
 Use EF Core with SQL Server.
 
+- Use proper, clean naming conventions for all database tables. For ASP.NET Core Identity tables, remove the default 'AspNet' prefix and map them to clean names (e.g. 'Users', 'Roles', 'UserRoles', 'UserClaims', 'UserLogins', 'RoleClaims', 'UserTokens').
 - Database schema must represent actual business rules.
 - Use foreign keys.
 - Use appropriate indexes.
