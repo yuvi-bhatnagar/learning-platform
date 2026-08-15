@@ -22,6 +22,27 @@ namespace learning_platform.Controllers
         [HttpGet]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
+            // If user is already authenticated, redirect them to their respective dashboard
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+
+                    if (await _userManager.IsInRoleAsync(user, "SuperAdmin") || 
+                        await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+                    
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
             // Clear existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 

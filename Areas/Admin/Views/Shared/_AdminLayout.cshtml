@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Portal</title>
+    <link rel="icon" type="image/svg+xml" href="~/images/brand/learning-path-icon.svg" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar">
+            <div class="sidebar-header py-0 px-3">
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="~/images/brand/learning-path-logo.svg" alt="Learning Path" class="logo-full img-fluid" style="height: 55px;" />
+                    <img src="~/images/brand/learning-path-icon.svg" alt="LP" class="logo-icon img-fluid d-none" style="height: 42px;" />
+                </div>
+            </div>
+
+            <ul class="components">
+                <li class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#userSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="bi bi-people"></i> User Management
+                    </a>
+                    <ul class="collapse list-unstyled @(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "show" : "")" id="userSubmenu">
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Admins" ? "active" : "")">
+                                <a asp-area="Admin" asp-controller="Users" asp-action="Admins">
+                                    <i class="bi bi-person-badge"></i> Admins
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a href="#">
+                                <i class="bi bi-person-video3"></i> Teachers
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="bi bi-mortarboard"></i> Students
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#lectureSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="bi bi-journal-text"></i> Lectures
+                    </a>
+                    <ul class="collapse list-unstyled" id="lectureSubmenu">
+                        <li>
+                            <a href="#">
+                                <i class="bi bi-calendar-event"></i> Schedules
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="bi bi-star"></i> Feedback & Ratings
+                    </a>
+                </li>
+
+                <li class="mt-auto border-top pt-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-arrow-left-circle"></i> Public Home
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div id="content">
+            <header id="content-header">
+                <button type="button" id="sidebarCollapse" class="btn">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-secondary small d-none d-sm-inline">Logged in as: <strong>@User.Identity?.Name</strong></span>
+                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-sm btn-outline-danger px-3">Logout</button>
+                    </form>
+                </div>
+            </header>
+
+            <main id="content-body">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Sidebar Toggle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarCollapse = document.getElementById('sidebarCollapse');
+
+            sidebarCollapse.addEventListener('click', function () {
+                if (window.innerWidth < 992) {
+                    sidebar.classList.toggle('active');
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
