@@ -1,0 +1,111 @@
+# ================================
+# Visual Studio / Rider
+# ================================
+
+.vs/
+.idea/
+.vscode/
+
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache/options
+*.VC.db
+*.VC.VC.opendb
+
+# ================================
+# Build output
+# ================================
+
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# ================================
+# Test results
+# ================================
+
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+coverage/
+coverage-*.xml
+coverage-*.json
+
+# ================================
+# NuGet
+# ================================
+
+packages/
+*.nupkg
+*.snupkg
+
+# ================================
+# ASP.NET
+# ================================
+
+wwwroot/lib/
+
+# ================================
+# Logs
+# ================================
+
+logs/
+*.log
+
+# ================================
+# Database / local data
+# ================================
+
+*.mdf
+*.ldf
+*.ndf
+
+# ================================
+# Environment / secrets
+# ================================
+
+.env
+.env.*
+!.env.example
+
+appsettings.Local.json
+appsettings.*.Local.json
+
+# User secrets
+secrets.json
+
+# ================================
+# Docker
+# ================================
+
+docker-data/
+docker-volumes/
+
+# ================================
+# OS files
+# ================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ================================
+# Temporary files
+# ================================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ================================
+# Azure / local tooling
+# ================================
+
+.azure/
