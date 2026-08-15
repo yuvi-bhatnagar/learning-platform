@@ -1,8 +1,70 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-5 bg-primary text-white rounded-3 shadow-sm mt-4">
+    <div class="container-fluid py-5 text-center">
+        <h1 class="display-4 fw-bold">1-to-1 Learning Platform</h1>
+        <p class="fs-4 mt-3">Book 30-minute individual lectures with expert instructors at your convenience.</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a asp-controller="Account" asp-action="Login" class="btn btn-light btn-lg px-4 fw-bold text-primary">Get Started</a>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 justify-content-center">
+    <!-- Student Section -->
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-3">
+            <div class="card-body d-flex flex-column text-center">
+                <div class="text-primary fs-1 mb-3">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+                <h3 class="card-title fw-bold">Student Portal</h3>
+                <p class="card-text text-muted flex-grow-1">Browse available teachers, select slots, and book your 1-to-1 interactive sessions.</p>
+                <div class="mt-3">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-custom-primary w-100">Student Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Section -->
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-3">
+            <div class="card-body d-flex flex-column text-center">
+                <div class="text-success fs-1 mb-3">
+                    <i class="bi bi-person-video3"></i>
+                </div>
+                <h3 class="card-title fw-bold">Teacher Portal</h3>
+                <p class="card-text text-muted flex-grow-1">Manage your weekly availability slots, log lecture completions, and view student feedback.</p>
+                <div class="mt-3">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-custom-success w-100">Teacher Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Section -->
+    <div class="col-md-4">
+        <div class="card card-custom h-100 p-3">
+            <div class="card-body d-flex flex-column text-center">
+                <div class="text-dark fs-1 mb-3">
+                    <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <h3 class="card-title fw-bold">Admin Console</h3>
+                <p class="card-text text-muted flex-grow-1">Manage teacher approvals, student access controls, schedules, and monitor system metrics.</p>
+                <div class="mt-3">
+                    @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("SuperAdmin") || User.IsInRole("Admin")))
+                    {
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-dark w-100">Go to Dashboard</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-dark w-100">Admin Login</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

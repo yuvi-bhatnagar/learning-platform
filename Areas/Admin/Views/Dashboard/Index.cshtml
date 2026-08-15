@@ -1,74 +1,93 @@
+@model learning_platform.Areas.Admin.Models.DashboardStatsViewModel
+
 @{
     ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
 }
 
-<div class="container-fluid mt-4">
-    <div class="row">
-        <!-- Sidebar or Quick Navigation -->
-        <div class="col-md-3">
-            <div class="list-group shadow-sm">
-                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                    Dashboard Overview
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">Manage Teachers</a>
-                <a href="#" class="list-group-item list-group-item-action">Manage Students</a>
-                <a href="#" class="list-group-item list-group-item-action">Lectures Schedule</a>
-                <a href="#" class="list-group-item list-group-item-action">Lecture Reports</a>
-                <a href="#" class="list-group-item list-group-item-action">Student Feedback & Ratings</a>
+<div class="mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <p class="text-muted small">System overview and control metrics.</p>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    <!-- Administrators Card -->
+    <div class="col-xl-4 col-md-6">
+        <div class="card card-custom h-100 border-start border-primary border-4 py-2">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Administrators</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark fs-2">@Model.TotalAdmins</div>
+                    </div>
+                    <div class="text-primary fs-1">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                </div>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <div class="mt-3">
+                        <a asp-controller="Users" asp-action="Admins" class="text-primary text-decoration-none small fw-bold">
+                            Manage Admins <i class="bi bi-arrow-right-short"></i>
+                        </a>
+                    </div>
+                }
             </div>
         </div>
+    </div>
 
-        <!-- Main Content Area -->
-        <div class="col-md-9">
-            <div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
-                <div class="container-fluid py-5">
-                    <h1 class="display-5 fw-bold">Admin Dashboard</h1>
-                    <p class="col-md-8 fs-4">Welcome back, <strong>@User.Identity?.Name</strong>! Use this control panel to manage teachers, students, bookings, reports, and reviews.</p>
-                    <hr class="my-4">
-                    <p>Current role permissions: 
-                        <span class="badge bg-success">Authenticated</span>
-                        @if (User.IsInRole("SuperAdmin"))
-                        {
-                            <span class="badge bg-danger">SuperAdmin Access</span>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <span class="badge bg-warning text-dark">Admin Access</span>
-                        }
-                    </p>
-                </div>
-            </div>
-
-            <!-- Management Stats Placeholders -->
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm bg-primary text-white">
-                        <div class="card-body py-4">
-                            <h5 class="card-title">Teachers</h5>
-                            <p class="card-text fs-2">--</p>
-                            <a href="#" class="btn btn-light btn-sm text-primary">Manage Teachers</a>
-                        </div>
+    <!-- Teachers Card -->
+    <div class="col-xl-4 col-md-6">
+        <div class="card card-custom h-100 border-start border-success border-4 py-2">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Active Teachers</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark fs-2">@Model.TotalTeachers</div>
+                    </div>
+                    <div class="text-success fs-1">
+                        <i class="bi bi-person-workspace"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm bg-success text-white">
-                        <div class="card-body py-4">
-                            <h5 class="card-title">Students</h5>
-                            <p class="card-text fs-2">--</p>
-                            <a href="#" class="btn btn-light btn-sm text-success">Manage Students</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm bg-dark text-white">
-                        <div class="card-body py-4">
-                            <h5 class="card-title">Upcoming Lectures</h5>
-                            <p class="card-text fs-2">--</p>
-                            <a href="#" class="btn btn-light btn-sm text-dark">View Schedule</a>
-                        </div>
-                    </div>
+                <div class="mt-3">
+                    <a href="#" class="text-success text-decoration-none small fw-bold">
+                        Manage Teachers <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Students Card -->
+    <div class="col-xl-4 col-md-6">
+        <div class="card card-custom h-100 border-start border-info border-4 py-2">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Registered Students</div>
+                        <div class="h5 mb-0 font-weight-bold text-dark fs-2">@Model.TotalStudents</div>
+                    </div>
+                    <div class="text-info fs-1">
+                        <i class="bi bi-mortarboard"></i>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="#" class="text-info text-decoration-none small fw-bold">
+                        Manage Students <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Welcome Panel -->
+<div class="card card-custom p-4">
+    <div class="card-body">
+        <h3 class="fw-bold mb-3">Welcome to the Administration Portal</h3>
+        <p class="text-secondary leading-relaxed">
+            Use the sidebar navigation to manage user accounts, coordinate lecture schedules, review feedback from students, and generate lecture compliance reports. Use the stats panel above to keep track of current platform registration metrics.
+        </p>
     </div>
 </div>

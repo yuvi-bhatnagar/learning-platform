@@ -1,0 +1,89 @@
+@model IEnumerable<learning_platform.Areas.Admin.Models.AdminUserRow>
+@inject Microsoft.AspNetCore.Identity.UserManager<learning_platform.Models.Entities.ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Manage Administrators";
+    Layout = "_AdminLayout";
+    var currentUserId = UserManager.GetUserId(User);
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-0 text-gray-800">Administrators</h1>
+        <p class="text-muted small mb-0">List of authorized system managers and super administrators.</p>
+    </div>
+    <a asp-action="CreateAdmin" class="btn btn-custom-primary">
+        <i class="bi bi-person-plus-fill me-2"></i> Register New Admin
+    </a>
+</div>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card card-custom">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 py-3">Email Address</th>
+                        <th class="py-3">Role</th>
+                        <th class="py-3">Status</th>
+                        <th class="pe-4 py-3 text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var admin in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 py-3 font-monospace">
+                                    <i class="bi bi-envelope-fill text-muted me-2"></i> @admin.Email
+                                </td>
+                                <td class="py-3">
+                                    @if (admin.Role.Contains("SuperAdmin"))
+                                    {
+                                        <span class="badge bg-danger px-2.5 py-1.5">SuperAdmin</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark px-2.5 py-1.5">Admin</span>
+                                    }
+                                </td>
+                                <td class="py-3">
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 small">Active</span>
+                                </td>
+                                <td class="pe-4 py-3 text-end">
+                                    <a asp-action="EditAdmin" asp-route-id="@admin.Id" class="btn btn-sm btn-outline-secondary me-1" title="Edit Admin">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form asp-action="DeleteAdmin" asp-route-id="@admin.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this administrator account?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" @(admin.Id == currentUserId ? "disabled" : "") title="@(admin.Id == currentUserId ? "You cannot delete your own account" : "Delete Admin")">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="bi bi-people-fill display-6 mb-3 d-block text-secondary"></i>
+                                No administrators registered.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,17 +8,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - learning_platform</title>
+    <title>@ViewData["Title"] - Learning Path</title>
+    <link rel="icon" type="image/svg+xml" href="~/images/brand/learning-path-icon.svg" />
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/learning_platform.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">learning_platform</a>
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/brand/learning-path-logo.svg" alt="Learning Path" style="height: 45px;" />
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -62,15 +65,23 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container flex-shrink-0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - learning_platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer mt-auto py-3 bg-white border-top">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-secondary small">
+            <div class="d-flex align-items-center gap-2">
+                <img src="~/images/brand/learning-path-wordmark.svg" alt="Learning Path" style="height: 16px; opacity: 0.75;" />
+                <span>&copy; @DateTime.Now.Year - All rights reserved.</span>
+            </div>
+            <div class="d-flex gap-3">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-secondary text-decoration-none">Privacy Policy</a>
+                <span class="text-muted">|</span>
+                <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
